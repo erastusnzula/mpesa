@@ -1,3 +1,3 @@
-DJANGO MPESA STK PUSH INTEGRATION
-=================================
+MPESA STK PUSH INTEGRATION INTO DJANGO PROJECT
+=============================================
 
