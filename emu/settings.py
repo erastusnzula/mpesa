@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7(8z!tz9g!0k%jdx95j1aq8r3_ozhrz18ff-)a#s6d@76xc)q#'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -117,12 +119,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MPESA_CONSUMER_KEY = ''
-MPESA_CONSUMER_SECRET = ''
-MPESA_SHORTCODE = ''
-MPESA_PASSKEY = ''
+MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
+MPESA_SHORTCODE = config('MPESA_SHORTCODE')
+MPESA_PASSKEY = config('MPESA_PASSKEY')
 MPESA_ENVIRONMENT = 'sandbox'  # or 'production'
-MPESA_CALLBACK_URL = ''
+MPESA_CALLBACK_URL = config('MPESA_CALLBACK_URL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
