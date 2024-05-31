@@ -3,4 +3,3 @@ from .models import STKPushTransaction
 
 admin.site.register(STKPushTransaction)
 
-# Register your models here.
