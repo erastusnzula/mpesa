@@ -1,3 +1,3 @@
-MPESA STK PUSH INTEGRATION INTO DJANGO PROJECT
-=============================================
+MPESA API INTEGRATION INTO DJANGO PROJECT
+=========================================
 
