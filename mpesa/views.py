@@ -33,5 +33,6 @@ class CallBack(View):
         stk_push_transaction.mobile_number = data['Body']['stkCallback']['CallbackMetadata']['Item'][4]['Value']
         stk_push_transaction.amount = data['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
         stk_push_transaction.balance = data['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
+        stk_push_transaction.save()
         print(data)
         return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})
