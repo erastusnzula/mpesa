@@ -1,3 +1,3 @@
-MPESA API INTEGRATION INTO DJANGO PROJECT
+MPESA API INTEGRATION - DJANGO PROJECT
 =========================================
 
