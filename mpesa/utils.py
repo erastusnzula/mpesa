@@ -17,7 +17,7 @@ def get_access_token():
     return access_token
 
 
-def initiate_stk_push(mobile_number, amount, reference, description):
+def initiate_stk_push(mobile_number, amount):
     access_token = get_access_token()
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" \
         if settings.MPESA_ENVIRONMENT == 'sandbox' \
@@ -36,8 +36,8 @@ def initiate_stk_push(mobile_number, amount, reference, description):
         "PartyB": settings.MPESA_SHORTCODE,
         "PhoneNumber": mobile_number,
         "CallBackURL": settings.MPESA_CALLBACK_URL,
-        "AccountReference": reference,
-        "TransactionDesc": description
+        "AccountReference": 'EMU',
+        "TransactionDesc": 'EMU Payments'
     }
 
     response = requests.post(api_url, json=data, headers=headers)
