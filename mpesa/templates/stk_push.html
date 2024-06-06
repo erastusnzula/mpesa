@@ -14,11 +14,11 @@
         <h1>Lipa na MPESA</h1>
         <img src="{% static 'images/mpesa.png' %}" alt="">
         <form id="stkPush" method="post" action="{% url 'mpesa:stk-push' %}">
-            {% csrf_token %}
+            {% csrf_token %} 
             <label for="mobile_number">Phone Number</label>
-            <input type="number" id="mobile_number" name="mobile_number"><br><br>
+            <input type="text" id="mobile_number" pattern="[0-9]{10}" placeholder="0700000000" maxlength="10" minlength="10" name="mobile_number" autofocus required><br><br>
             <label for="amount">Amount</label>
-            <input type="number" id="amount" name="amount" required><br><br>
+            <input type="number" id="amount" placeholder="100" name="amount" required><br><br>
             <button type="submit" id="submit-btn">Pay</button>
         </form>
         <div id="response"></div>
@@ -66,7 +66,7 @@
             width: 100%;
             border: none;
             outline: none;
-            padding: .5rem .15rem;
+            padding: .5rem 1rem;
             caret-color: var(--background-color);
             border-radius: var(--radius);
         }
@@ -97,19 +97,22 @@
     </style>
 
     <script>
-        const mobile = document.getElementById('mobile')
-        const amount = document.getElementById('amount')
+        const mobileDiv = document.getElementById('mobile_number')
+        const amountDiv = document.getElementById('amount')
         document.getElementById('stkPush').addEventListener('submit', function(event) {
             event.preventDefault();
-
             const formData = new FormData(this);
             const responseDiv = document.getElementById('response');
-            if(mobile != null & amount != null){
+        
+            if(mobileDiv !== null & amountDiv !== null){
+                const mobileNumber = mobileDiv.value.replace(mobileDiv.value.charAt(0), '254')
+                const amount = amountDiv.value
                 fetch(this.action, {
                     method: 'POST',
-                    body: formData,
+                    body: JSON.stringify({'mobile_number': mobileNumber, 'amount': amount}),
                     headers: {
-                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                        'Content-Type': 'application/json'
                     }
                 })
                 .then(response => response.json())
