@@ -17,7 +17,9 @@ class STKPush(View):
         mobile_number = data['mobile_number']
         amount = data['amount']
         response = initiate_stk_push(mobile_number=int(mobile_number), amount=int(amount))
-        return JsonResponse(response, safe=False)
+        print(mobile_number)
+        print(amount)
+        return JsonResponse(response)
 
 
 class CallBack(View):

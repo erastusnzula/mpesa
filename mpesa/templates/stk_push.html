@@ -99,12 +99,23 @@
     <script>
         const mobileDiv = document.getElementById('mobile_number')
         const amountDiv = document.getElementById('amount')
+        
+        {% comment %} const isOnline = ()=>{
+            if(navigator.onLine){
+                return true
+            }else{
+                return false
+            }
+        }
+        window.addEventListener('online', isOnline);
+        window.addEventListener('offline', isOnline);
+        isOnline() {% endcomment %}
         document.getElementById('stkPush').addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(this);
             const responseDiv = document.getElementById('response');
         
-            if(mobileDiv !== null & amountDiv !== null){
+            if(mobileDiv !== null && amountDiv !== null){
                 const mobileNumber = mobileDiv.value.replace(mobileDiv.value.charAt(0), '254')
                 const amount = amountDiv.value
                 fetch(this.action, {
