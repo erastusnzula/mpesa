@@ -11,15 +11,12 @@ class STKPush(View):
         return render(self.request, 'stk_push.html')
 
     def post(self, *args, **kwargs):
-        # mobile_number = self.request.POST.get('mobile_number')
-        # amount = int(self.request.POST.get('amount'))
         data = json.loads(self.request.body)
         mobile_number = data['mobile_number']
         amount = data['amount']
         response = initiate_stk_push(mobile_number=int(mobile_number), amount=int(amount))
-        print(mobile_number)
-        print(amount)
         return JsonResponse(response)
+        
 
 
 class CallBack(View):
