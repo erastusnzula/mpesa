@@ -11,6 +11,14 @@ class ProductList(View):
             'products': products
         }
         return render(self.request, 'shop/product_list.html', context)
+    
+class ProductDetail(View):
+    def get(self, request, id):
+        product = Product.objects.get(id=id)
+        context = {
+            'product': product
+        }
+        return render(request, 'shop/product_details.html', context)
 
 class AddToCart(View):
     def get(self,*args, **kwargs):
@@ -56,3 +64,26 @@ class AddToCart(View):
             orderItem.delete()
         return JsonResponse("item added successfully to cart.", safe=False)
     
+class Checkout(View):
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            customer = self.request.user.customer
+            order, created = Order.objects.get_or_create(customer=customer, is_complete=False)
+            items = order.orderitem_set.all()
+        else:
+            try:
+                cart = json.loads(self.request.COOKIES['cart'])
+            except:
+                cart = {}
+            print(cart)
+            items = []
+            order = {
+                'get_cart_total': 0,
+                'get_cart_items': 0,
+                'for_shipping': False
+            }
+        context = {
+            'items': items,
+            'order': order
+        }
+        return render(self.request, 'shop/checkout.html', context)

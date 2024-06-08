@@ -1,9 +1,16 @@
+.shop-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
 .card{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     width: 250px;
-    height: 300px;
+    height: 350px;
     border-radius: .5rem;
     padding: .5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 
@@ -25,7 +32,11 @@
 }
 
 .card .card-header img{
-    width: 60%;
+    width: 90%;
+    height: 50%;
+    margin: 5px 0 0 0;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .card .card-footer{

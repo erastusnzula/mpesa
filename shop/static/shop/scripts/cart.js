@@ -17,6 +17,16 @@ for (let i = 0; i<addToCartBtn.length; i++){
     })
 }
 
+for (let i=0; i < viewProductBtn.length; i++){
+    viewProductBtn[i].addEventListener('click', ()=>{
+        const productID = viewProductBtn[i].dataset.product_id
+        const action = viewProductBtn[i].dataset.action
+        if (action === 'view'){
+            window.location.href='/shop/'+ productID + '/'
+        }
+    })
+}
+
 for (let i = 0; i<removeProductBtn.length; i++){
     removeProductBtn[i].addEventListener('click', ()=>{
         let productID = removeProductBtn[i].dataset.product_id;

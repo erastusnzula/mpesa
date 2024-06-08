@@ -17,7 +17,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='shop/products/')
+    image = models.ImageField(null=True, blank=True, upload_to='shop/products/')
 
     @property
     def get_image_url(self):
