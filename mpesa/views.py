@@ -8,7 +8,7 @@ from .utils import initiate_stk_push
 
 class STKPush(View):
     def get(self, *args, **kwargs):
-        return render(self.request, 'stk_push.html')
+        return render(self.request, 'mpesa/stk_push.html')
 
     def post(self, *args, **kwargs):
         data = json.loads(self.request.body)

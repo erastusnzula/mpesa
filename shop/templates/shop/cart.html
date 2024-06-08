@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+    <h1>Your Cart</h1>
+    <ul>
+        {% for order in orders %}
+        <li>
+            <h2>{{ order.product.name }}</h2>
+            <p>Quantity: {{ order.quantity }}</p>
+            <p>Price: ${{ order.product.price }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <p>Total Price: ${{ total_price }}</p>
+    <a href="#">Checkout with PayPal</a>
+{% endblock content %}

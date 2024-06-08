@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa</title>  
+    <link rel="stylesheet" type="text/css" href="{% static 'mpesa/css/styles.css' %}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}" media="screen" />
+    <script>
+        let user = '{{request.user}}'
+        function getToken(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i<cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+        }
+
+        const csrftoken = getToken('csrftoken');
+
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(';');
+            for (let i=0; i<cookieArr.length; i++){
+              let cookiePair = cookieArr[i].split("=");
+              if(name==cookiePair[0].trim()){
+                return decodeURIComponent(cookiePair[1]);
+              }
+            }
+            return null;
+          }
+  
+          let cart = JSON.parse(getCookie('cart'));
+          if (cart==undefined){
+            cart={}
+            document.cookie= 'cart='+ JSON.stringify(cart) + ';domian=;path=/'
+            console.log("Cart created: ", cart)
+          }
+  
+          console.log(cart)
+    </script>
+</head>
+
+<body>
+{% block content %}
+{% endblock content %}
+<script src={% static 'shop/scripts/cart.js' %}></script>
+</body>
+</html>

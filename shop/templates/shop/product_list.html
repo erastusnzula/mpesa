@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="shop-container">
+    {% for product in products %}
+    <div class="card">
+        <div class="card-header">
+            <img src={{product.get_image_url}} alt="">
+            
+        </div>
+        <div class="card-body">
+            <p>Name: <span>{{ product.name }}</span></p>
+            <p>Price: ${{ product.price }}</p>
+        </div>
+        <div class="card-footer">
+            <a class="update-cart" data-product_id={{product.id}} data-action="add">Add to Cart</a>
+            <a class="view-product" data-product_id={{product.id}} data-action="view">view</a>
+            <a class="remove-product" data-product_id={{product.id}} data-action="remove">Remove</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content%}
