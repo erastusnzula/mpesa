@@ -46,3 +46,16 @@
 .card .card-footer a:hover{
     padding: .6rem;
 }
+
+.table-container {
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}

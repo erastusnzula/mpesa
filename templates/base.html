@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load cart %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M-Pesa</title>  
     <link rel="stylesheet" type="text/css" href="{% static 'mpesa/css/styles.css' %}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}" media="screen" />
+    <script src="https://kit.fontawesome.com/4605777c76.js" crossorigin="anonymous"></script>
     <script>
         let user = '{{request.user}}'
         function getToken(name) {
@@ -50,6 +52,7 @@
 </head>
 
 <body>
+  <a class="nav-link" href="{% url 'shop:add-to-cart' %}">Cart <span class="badge bg-primary">{{request.user|cart_product_count}}</span></a>
 {% block content %}
 {% endblock content %}
 <script src={% static 'shop/scripts/cart.js' %}></script>

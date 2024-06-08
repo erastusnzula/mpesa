@@ -56,8 +56,3 @@ class AddToCart(View):
             orderItem.delete()
         return JsonResponse("item added successfully to cart.", safe=False)
     
-class Cart(View):
-    def get(self, *args, **kwargs):
-        orders = Order.objects.all()
-        total_price = sum(order.product.price * order.quantity for order in orders)
-        return render(self.request, 'shop/cart.html', {'orders': orders, 'total_price': total_price})

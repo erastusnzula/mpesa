@@ -46,7 +46,7 @@ const updateUserOrder = (productID, action)=>{
     .then(response => response.json())
     .then(data => {
         console.log(data)
-        // location.reload()
+        location.reload()
     })
     
 }
