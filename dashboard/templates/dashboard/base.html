@@ -68,20 +68,24 @@
           <a class="nav-link" href="#" style="--i:0;">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:product-list' %}" style="--i:1;">Shop</a>
+          <a class="nav-link" href="{% url 'mpesa:stk-push' %}" style="--i:1;">Mpesa</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" style="--i:2;">Contact Us</a>
+          <a class="nav-link" href="{% url 'shop:product-list' %}" style="--i:2;">Shop</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" style="--i:3;">Sign Up</a>
+          <a class="nav-link" href="#" style="--i:3;">Contact Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" style="--i:4;">Sign In</a>
+          <a class="nav-link" href="{% url 'shop:add-to-cart' %}" style="--i:4;">Cart <span class="cart-badge">{{request.user|cart_product_count}}</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:add-to-cart' %}" style="--i:5;">Cart <span class="badge bg-primary">{{request.user|cart_product_count}}</span></a>
+          <a class="nav-link" href="#" style="--i:4;">Sign Up</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="--i:6;">Sign In</a>
+        </li>
+        
       </ul>
     </div>
   </nav>

@@ -75,6 +75,14 @@
     margin-left: 2.5rem;
 }
 
+.nav-items .nav-item .cart-badge{
+    background-color: rgb(18, 238, 18);
+    padding: .2rem .5rem;
+    border-radius: .5rem;
+    outline: none;
+    border: none;
+}
+
 @media (max-width: 992px) {
     .navbar{
         padding: 1rem 3%;

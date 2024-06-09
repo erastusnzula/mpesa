@@ -6,8 +6,7 @@
     {% for product in products %}
     <div class="card">
         <div class="card-header">
-            <img src={{product.get_image_url}} alt="">
-            
+            <img src="{{product.get_image_url}}" alt=""/> 
         </div>
         <div class="card-body">
             <p>Name: <span>{{ product.name }}</span></p>
