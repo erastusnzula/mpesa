@@ -1,0 +1,137 @@
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 10%;
+    z-index: 100;
+}
+
+.navbar::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0,0,0,.5); */
+    background-color: blueviolet;
+    backdrop-filter: blur(50px);
+    z-index: -1;
+}
+
+.navbar::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -90%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    transition: .3s ease;
+}
+
+.navbar:hover::after{
+    left: 100%;
+}
+
+.navbar .nav-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.navbar .nav-container .menu-icon{
+    font-size: 2.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 5%;
+}
+
+.navbar .nav-container #check-box{
+    display: none;
+}
+
+.navbar .nav-container #logo{
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-container .nav-items{
+    display: flex;
+    list-style: none;
+}
+
+.nav-items .nav-item a{
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 2.5rem;
+}
+
+@media (max-width: 992px) {
+    .navbar{
+        padding: 1rem 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .nav-container .menu-icon{
+        display: inline-flex;
+    }
+
+    #check-box:checked~.menu-icon #menu-icon{
+        display: none;
+    }
+
+    .navbar .nav-container .menu-icon #close-icon{
+        display: none;
+    }
+
+    #check-box:checked~.menu-icon #close-icon{
+        display: block;
+    }
+
+    .nav-container .nav-items{
+        position: absolute;
+        top: 75%;
+        left: 0;
+        width: 100%;
+        height: 0;
+        /* background-color: rgba(0,0,0,.5); */
+        background-color: blueviolet;
+        backdrop-filter: blur(50px);
+        display: block;
+        overflow: hidden;
+        transition: .3s ease;
+        
+        /* box-shadow: 0.5rem 1rem rgba(0,0,0,.1); */
+    }
+
+    #check-box:checked~.nav-items{
+        height: fit-content;
+    }
+
+    .nav-items .nav-item a{
+        margin: 1.5rem 0;
+        font-size: 1.1rem;
+        display: block;
+        text-align: center;
+        transform: translateY(-50px);
+        transition: .3s ease;
+        transition-delay: calc(.15s * var(--i));
+        opacity: 0;
+
+    }
+
+    #check-box:checked~.nav-items a{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

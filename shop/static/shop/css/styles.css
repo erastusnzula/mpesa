@@ -1,4 +1,5 @@
 .shop-container{
+    margin-top: 8rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,7 +59,8 @@
     padding: .6rem;
 }
 
-.table-container {
+.cart-container {
+    margin-top: 8rem;
     overflow-x: auto;
 }
 table {

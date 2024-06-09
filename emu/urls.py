@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mpesa/', include('mpesa.urls'), name='mpesa'),
     path('shop/', include('shop.urls'), name='shop'),
+    path('', include('dashboard.urls'), name='dashboard'),
 ]
 
 if settings.DEBUG:

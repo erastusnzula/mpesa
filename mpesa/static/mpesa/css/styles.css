@@ -1,7 +1,7 @@
 
 :root{
     --radius: .5rem;
-    --background-color: rgb(146, 12, 204);
+    --background-color: blueviolet;
 }
 
 *{
@@ -13,7 +13,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: 8rem auto;
     background-color: var(--background-color);
     padding: 2rem;
     border-radius: var(--radius);

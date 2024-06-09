@@ -28,6 +28,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard.apps.DashboardConfig',
     'mpesa.apps.MpesaConfig',
     'shop.apps.ShopConfig',
     'django.contrib.admin',
@@ -119,6 +120,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mpesa/static'),
     os.path.join(BASE_DIR, 'shop/static'),
+    os.path.join(BASE_DIR, 'dashboard/static')
     # Add more app static directories as needed
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
