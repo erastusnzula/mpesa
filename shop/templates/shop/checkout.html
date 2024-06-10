@@ -2,68 +2,245 @@
 {% block content %}
 {% load static %}
 
-   
+ <style>
+    .checkout{
+        padding: 5rem 10%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout input{
+        padding: .5rem;
+        width: 100%;
+        outline: none;
+        margin-bottom: .5rem;
+        border: none;
+        border-radius: .5rem;
+        color: blueviolet;
+
+
+    }
+    .checkout .checkout-user{
+        background-color: blueviolet;
+        padding: 1rem;  
+        border-radius: .5rem;
+        margin-bottom: .5rem;   
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout .checkout-user .checkout-back{
+        margin-bottom: 1rem;
+        background-color: #fff;
+        text-align: center;
+        padding: .8rem;
+        border-radius: .5rem;
+        text-decoration: none;
+        color: blueviolet;
+    }
+
+    .checkout .checkout-user .checkout-total{
+        color: #fff;
+    }
+
+    .checkout .checkout-user .checkout-total-span{
+        background-color: #fff;
+        padding: .8rem;
+        color: blueviolet;
+        border-radius: .5rem;
+        font-weight: 700;
+    }
+
+    .checkout .checkout-user .input-group{
+        display: flex;
+        justify-content: space-between;
+        gap: 1.15rem;
+    }
+
+    .checkout .checkout-user .checkout-links{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .checkout .checkout-user input{
+        width: 100%;
+    }
+
+    .checkout .checkout-address{
+        display: flex;
+        justify-content: space-between;
+        background-color: blueviolet;
+        padding: 1rem;
+        border-radius: .5rem;
+        margin-bottom: .5rem;
+        gap: 2rem;
+    }
+
+    .checkout .checkout-address .input-group{
+        width: 100%;
+    }
+
+    .checkout .proceed-button{
+        background-color: blueviolet;
+        padding: 1rem;
+        border-radius: .5rem;
+        margin-bottom: .2rem;
+        display: flex;
+        justify-content: center;
+       
+    }
+
+    .checkout .proceed-button .checkout-proceed{
+        padding: .8rem;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        color: blueviolet;
+        font-weight: 500;
+        font-size: 1rem;
+        border-radius: .5rem;
+        background-color: rgb(18, 238, 18);
+    }
+    .checkout .payment-options{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: blueviolet;
+        padding: 1rem;
+        border-radius: .5rem;
+        margin-bottom: 1rem;
+    }
+
+    .checkout .payment-options .select-payment-header h3{
+        margin-left: 2rem;
+        text-decoration: underline;
+        color: #fff;
+    }
+
+    .checkout .payment-options .select-payment-body{
+        background-color: #fff;
+        border-radius: .5rem;
+        padding: .8rem;
+    }
+
+    .checkout .payment-options .select-payment-body .method{
+        margin: 1rem;   
+    }
+
+    .checkout .payment-options .select-payment-body .method a{
+        text-decoration: none;
+        color: blueviolet;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .checkout .checkout-table{
+        background-color: blueviolet;
+        padding: 1rem;
+        border-radius: .5rem;
+        margin-bottom: 1rem;
+    }
+
+    table {
+        /* font-family: arial, sans-serif; */
+        border-collapse: collapse;
+        width: 100%;
+        color: #fff;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #4c4949;
+    }
+
+ </style>  
 <div class="checkout">
-    <div class="">
-        <form class="checkout-form" id="checkout-form">
+    <form class="checkout-form" id="checkout-form">
             {% csrf_token%}
-            <div class="checkout-user" id="checkout-user">
-                <a href="{% url  'shop:add-to-cart' %}" class="">Back to cart</a>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Name" name="user_name" aria-label="checkout-name" required>
-                    <span class="input-group-text"></span>
-                    <input type="email" class="form-control" placeholder="Email" name="user_email" aria-label="checkout-email" required>
-                </div>
-            </div>  
-            <div class="checkout-address" id="checkout-shipping">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Address" name="user_address" aria-label="user_address" required>
-                    <span class="input-group-text"></span>
-                    <input type="text" class="form-control" placeholder="City" name="user_city" aria-label="user_city" required>
-                </div>
-                <div class="input-group">
-                    <input type="number" class="form-control" placeholder="Zip Code" name="user_zip_code" aria-label="user_zip_code" required>
-                    <span class="input-group-text"></span>
-                    <input type="text" class="form-control" placeholder="Country" name="user_country" aria-label="user_country" required>
-                </div>
+        <div class="checkout-user" id="checkout-user">
+            <div class="checkout-links">
+                <a href="{% url  'shop:add-to-cart' %}" class="checkout-back">Back to cart</a>
+                <p class="checkout-total">Total - <span class="checkout-total-span">$100.00</span></p>
             </div>
-            <button class="checkout-proceed" id="checkout-btn">Proceed</button>
             
-        </form>
-        <div class="checkout-payment form-control" id="checkout-btn-p">
-            <small>Paypal Options</small>
-            <button class="" id="paypal-payment-btn">Make Payment</button>
-            <p>Mpesa</p>
-            <p>Paypal</p>
-            <p>Stripe</p>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter Your Name" name="user_name" aria-label="checkout-name" required autofocus>
+                <span class="input-group-text"></span>
+                <input type="email" class="form-control" placeholder="Enter Your Email Address" name="user_email" aria-label="checkout-email" required>
+            </div>
+        </div>  
+
+        <div class="checkout-address" id="checkout-address">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Enter Your Physical Address" name="user_address" aria-label="user_address" required>
+                <span class="input-group-text"></span>
+                <input type="text" class="form-control" placeholder="City" name="user_city" aria-label="user_city" required>
+            </div>
+            <div class="input-group">
+                <input type="number" class="form-control" placeholder="Zip Code" name="user_zip_code" aria-label="user_zip_code" required>
+                <span class="input-group-text"></span>
+                <input type="text" class="form-control" placeholder="Country" name="user_country" aria-label="user_country" required>
+            </div>
         </div>
+
+        <div class="proceed-button">
+            <button class="checkout-proceed" id="checkout-proceed">Proceed</button>
+        </div>
+            
+    </form>
+    
+    <div class="payment-options" id="payment-options">
+        <!-- <p>Paypal Options</p>
+        <button class="" id="paypal-payment-btn">Make Payment</button> -->
+        <div class="select-payment-header">
+            <h3>Select Payment Method</h3>
+        </div>
+        <div class="select-payment-body">
+            <div class="method">
+                <a href="#">1. PayPal</a>
+           </div>
+           <div class="method">
+                <a href="#">2. Stripe</a>
+            </div>
+            <div class="method">
+                <a href="#">3. MPESA</a>
+            </div>
+        </div>
+       
     </div>
+
     <div class="checkout-table">
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                <th  colspan="6">Order Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items%}
-                <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td><img src="{{item.product.get_image_url}}" width='30px' class="cart-card-img-top" alt=""></td>
-                <td>{{item.product.name}}</td>
-                <td>${{item.product.price}}</td>
-                <td>{{item.quantity}}</td>
-                <td>${{item.get_total}}</td>
-                </tr>
-                {% endfor %}
-                
-                <tr>
+        <table>
+            <tr>
+                <th scope="col">SN</th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+            </tr>
+            {% for item in items%}
+            <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><img src="{{item.product.get_image_url}}" width='30px' class="cart-card-img-top" alt=""></td>
+            <td>{{item.product.name}}</td>
+            <td>${{item.product.price}}</td>
+            <td class="cart-quantity">
+                {{item.quantity}}
+            </td>
+            <td>${{item.get_total}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
                 <th scope="row"></th>
                 <td class="cart-total" colspan="4">Total</td>
                 <td>${{order.get_cart_total}}</td>
-                </tr>
-                
-            </tbody>
+            </tr>
         </table>
     </div>
 </div>
@@ -73,14 +250,12 @@
     let total = '{{order.get_cart_total}}'
     if(shipping == 'False'){
         console.log("shipping")
-        document.getElementById('checkout-shipping').style.display='none';
+        document.getElementById('checkout-address').style.display='none';
     }
     const checkoutForm = document.getElementById('checkout-form');
     checkoutForm.addEventListener('submit',(e)=>{
         e.preventDefault()
         console.log("Form submission")
-        document.getElementById('checkout-btn').classList.add('hidden')
-        document.getElementById('checkout-btn-p').classList.remove('hidden')
     });
 </script>
 
