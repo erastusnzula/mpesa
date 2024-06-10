@@ -165,7 +165,7 @@
         <div class="checkout-user" id="checkout-user">
             <div class="checkout-links">
                 <a href="{% url  'shop:add-to-cart' %}" class="checkout-back">Back to cart</a>
-                <p class="checkout-total">Total - <span class="checkout-total-span">$100.00</span></p>
+                <p class="checkout-total">Total - <span class="checkout-total-span">${{order.get_cart_total}}</span></p>
             </div>
             
             <div class="input-group">
