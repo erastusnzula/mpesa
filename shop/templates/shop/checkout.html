@@ -1,164 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
 {% load static %}
-
- <style>
-    .checkout{
-        padding: 5rem 10%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .checkout input{
-        padding: .5rem;
-        width: 100%;
-        outline: none;
-        margin-bottom: .5rem;
-        border: none;
-        border-radius: .5rem;
-        color: blueviolet;
-
-
-    }
-    .checkout .checkout-user{
-        background-color: blueviolet;
-        padding: 1rem;  
-        border-radius: .5rem;
-        margin-bottom: .5rem;   
-        display: flex;
-        flex-direction: column;
-    }
-
-    .checkout .checkout-user .checkout-back{
-        margin-bottom: 1rem;
-        background-color: #fff;
-        text-align: center;
-        padding: .8rem;
-        border-radius: .5rem;
-        text-decoration: none;
-        color: blueviolet;
-    }
-
-    .checkout .checkout-user .checkout-total{
-        color: #fff;
-    }
-
-    .checkout .checkout-user .checkout-total-span{
-        background-color: #fff;
-        padding: .8rem;
-        color: blueviolet;
-        border-radius: .5rem;
-        font-weight: 700;
-    }
-
-    .checkout .checkout-user .input-group{
-        display: flex;
-        justify-content: space-between;
-        gap: 1.15rem;
-    }
-
-    .checkout .checkout-user .checkout-links{
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .checkout .checkout-user input{
-        width: 100%;
-    }
-
-    .checkout .checkout-address{
-        display: flex;
-        justify-content: space-between;
-        background-color: blueviolet;
-        padding: 1rem;
-        border-radius: .5rem;
-        margin-bottom: .5rem;
-        gap: 2rem;
-    }
-
-    .checkout .checkout-address .input-group{
-        width: 100%;
-    }
-
-    .checkout .proceed-button{
-        background-color: blueviolet;
-        padding: 1rem;
-        border-radius: .5rem;
-        margin-bottom: .2rem;
-        display: flex;
-        justify-content: center;
-       
-    }
-
-    .checkout .proceed-button .checkout-proceed{
-        padding: .8rem;
-        width: 100%;
-        border: none;
-        cursor: pointer;
-        color: blueviolet;
-        font-weight: 500;
-        font-size: 1rem;
-        border-radius: .5rem;
-        background-color: rgb(18, 238, 18);
-    }
-    .checkout .payment-options{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: blueviolet;
-        padding: 1rem;
-        border-radius: .5rem;
-        margin-bottom: 1rem;
-    }
-
-    .checkout .payment-options .select-payment-header h3{
-        margin-left: 2rem;
-        text-decoration: underline;
-        color: #fff;
-    }
-
-    .checkout .payment-options .select-payment-body{
-        background-color: #fff;
-        border-radius: .5rem;
-        padding: .8rem;
-    }
-
-    .checkout .payment-options .select-payment-body .method{
-        margin: 1rem;   
-    }
-
-    .checkout .payment-options .select-payment-body .method a{
-        text-decoration: none;
-        color: blueviolet;
-        font-size: 1rem;
-        font-weight: 400;
-    }
-
-    .checkout .checkout-table{
-        background-color: blueviolet;
-        padding: 1rem;
-        border-radius: .5rem;
-        margin-bottom: 1rem;
-    }
-
-    table {
-        /* font-family: arial, sans-serif; */
-        border-collapse: collapse;
-        width: 100%;
-        color: #fff;
-    }
-    
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #4c4949;
-    }
-
- </style>  
+ 
 <div class="checkout">
     <form class="checkout-form" id="checkout-form">
             {% csrf_token%}
@@ -188,10 +31,9 @@
             </div>
         </div>
 
-        <div class="proceed-button">
+        <div class="proceed-button" id="proceed-buttonDiv">
             <button class="checkout-proceed" id="checkout-proceed">Proceed</button>
-        </div>
-            
+        </div>          
     </form>
     
     <div class="payment-options" id="payment-options">
@@ -202,19 +44,22 @@
         </div>
         <div class="select-payment-body">
             <div class="method">
-                <a href="#">1. PayPal</a>
+                <a href="{% url 'paypal:create-payment' %}"><img src="{% static "shop/images/paypal.png" %}" alt="" width="50" /></a>
+                <a href="{% url 'paypal:create-payment' %}"></a>
            </div>
            <div class="method">
-                <a href="#">2. Stripe</a>
+                <a href="{% url 'stripe:stripe-pay' %}" ><img src="{% static "shop/images/stripe.png" %}" alt="" width="80" /></a>
+                <a href="{% url 'stripe:stripe-pay' %}">Stripe</a>
             </div>
             <div class="method">
-                <a href="#">3. MPESA</a>
+                <a href="{% url 'mpesa:stk-push' %}"><img src="{% static "shop/images/mpesa.png" %}" alt="" width="80" /></a>
+                <a href="{% url 'mpesa:stk-push' %}">MPESA</a>
             </div>
         </div>
        
     </div>
 
-    <div class="checkout-table">
+    <div class="checkout-table" id="checkout-table">
         <table>
             <tr>
                 <th scope="col">SN</th>
@@ -246,17 +91,38 @@
 </div>
 
 <script>
+    const checkoutForm = document.getElementById('checkout-form');
+    const checkoutUser = document.getElementById('checkout-user');
+    const checkoutAddress = document.getElementById('checkout-address');
+    const proceedButtonDiv = document.getElementById("proceed-buttonDiv")
+    const proceedBtn = document.getElementById('checkout-proceed');
+    const paymentOptions = document.getElementById('payment-options');
+    const checkoutTable = document.getElementById('checkout-table');
+
+
+
+
     let shipping = '{{order.for_shipping}}'
     let total = '{{order.get_cart_total}}'
     if(shipping == 'False'){
         console.log("shipping")
         document.getElementById('checkout-address').style.display='none';
     }
-    const checkoutForm = document.getElementById('checkout-form');
+    
     checkoutForm.addEventListener('submit',(e)=>{
         e.preventDefault()
         console.log("Form submission")
+        proceedButtonDiv.style.display = 'none';
+        checkoutAddress.style.display = 'none';
+        paymentOptions.style.display = 'flex';
+        // checkoutTable.style.display = 'flex';
+        checkoutUser.style.display = 'none';
+        userData(checkoutForm.user_name.value, checkoutForm.user_email.value)
     });
+    
+    const userData = (userName, userEmail)=>{
+        console.log(`Username: ${userName} Email: ${userEmail}`)
+    }
 </script>
 
 {% endblock content %}

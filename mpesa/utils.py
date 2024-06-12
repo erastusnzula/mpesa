@@ -43,3 +43,14 @@ def initiate_stk_push(mobile_number, amount):
     response = requests.post(api_url, json=data, headers=headers)
     response.raise_for_status()
     return response.json()
+
+def get_conversion_rate(amount):
+    api_url = 'https://api.exchangerate-api.com/v4/latest/USD'
+    data = requests.get(api_url).json()
+    currencies = data['rates']
+    from_ = 'USD'
+    to = 'KES'
+    get_amount = float(amount)
+    get_amount = get_amount / currencies[from_]
+    get_amount = round(get_amount * currencies[to], 4)
+    return int(get_amount)

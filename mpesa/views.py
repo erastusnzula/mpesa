@@ -3,17 +3,24 @@ from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
 from .models import STKPushTransaction
-from .utils import initiate_stk_push
+from .utils import initiate_stk_push, get_conversion_rate
+from shop.models import  Order
 
 
 class STKPush(View):
     def get(self, *args, **kwargs):
-        return render(self.request, 'mpesa/stk_push.html')
+        customer = self.request.user.customer
+        order = Order.objects.get(customer=customer, is_complete=False)
+        order_total = str(int(order.get_cart_total))
+        return render(self.request, 'mpesa/stk_push.html', {'order_total': order_total})
 
     def post(self, *args, **kwargs):
         data = json.loads(self.request.body)
         mobile_number = data['mobile_number']
-        amount = data['amount']
+        customer = self.request.user.customer
+        order = Order.objects.get(customer=customer, is_complete=False)
+        order_total = int(order.get_cart_total)
+        amount = get_conversion_rate(order_total)
         response = initiate_stk_push(mobile_number=int(mobile_number), amount=int(amount))
         return JsonResponse(response)
         

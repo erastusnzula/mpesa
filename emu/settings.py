@@ -29,6 +29,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
+    'stripe.apps.StripeConfig',
+    'paypal.apps.PaypalConfig',
     'mpesa.apps.MpesaConfig',
     'shop.apps.ShopConfig',
     'django.contrib.admin',
@@ -120,7 +122,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mpesa/static'),
     os.path.join(BASE_DIR, 'shop/static'),
-    os.path.join(BASE_DIR, 'dashboard/static')
+    os.path.join(BASE_DIR, 'dashboard/static'),
+    os.path.join(BASE_DIR, 'paypal/static'),
+    os.path.join(BASE_DIR, 'stripe/static')
     # Add more app static directories as needed
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

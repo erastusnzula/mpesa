@@ -11,30 +11,32 @@
         {% csrf_token %} 
         <label for="mobile_number">Phone Number</label>
         <input type="text" id="mobile_number" pattern="[0-9]{10}" placeholder="0700000000" maxlength="10" minlength="10" name="mobile_number" autofocus required><br><br>
-        <label for="amount">Amount</label>
-        <input type="number" id="amount" placeholder="100" name="amount" required><br><br>
+        {% comment %} <label for="amount">Amount</label>
+        <input type="number" id="amount" placeholder="100" value="{{order_total}}" name="amount" required readonly><br><br> {% endcomment %}
         <button type="submit" id="submit-btn">Pay</button>
     </form>
+
     <div id="response"></div>
 </div>
 
 
 <script>
     const mobileDiv = document.getElementById('mobile_number');
-    const amountDiv = document.getElementById('amount');
+    {% comment %} const amountDiv = document.getElementById('amount'); {% endcomment %}
+    
     document.getElementById('stkPush').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
         const responseDiv = document.getElementById('response');
     
-        if(mobileDiv !== null && amountDiv !== null){
+        if(mobileDiv !== null){
             const mobileNumber = mobileDiv.value.replace(mobileDiv.value.charAt(0), '254');
-            const amount = amountDiv.value;
+            //const amount = amountDiv.value;
             console.log(mobileNumber)
-            console.log(amount)
+            //console.log(amount)
             fetch(this.action, {
                 method: 'POST',
-                body: JSON.stringify({'mobile_number': mobileNumber, 'amount': amount}),
+                body: JSON.stringify({'mobile_number': mobileNumber}),
                 headers: {
                     'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
                     'Content-Type': 'application/json'
