@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="proceed-button">
+        <div class="proceed-button" id="checkout-proceedDiv">
             <button class="checkout-proceed" id="checkout-proceed">Proceed</button>
         </div>          
     </form>
@@ -44,16 +44,16 @@
             <h3>Please Select Payment Method</h3>
         </div>
         <div class="select-payment-body">
-            <div class="method">
-                <a href=""><img src="../../static/shop/images/paypal.png" alt="" width="50" /></a>
+            <div class="method" id="paypal">
+                <a href="#"><img src="../../static/shop/images/paypal.png" alt="" width="50" /></a>
                 <a href="#"></a>
            </div>
-           <div class="method">
-                <a href="" ><img src="../../static/shop/images/stripe.png" alt="" width="80" /></a>
+           <div class="method" id="stripe">
+                <a href="#" ><img src="../../static/shop/images/stripe.png" alt="" width="80" /></a>
                 <a href="#">Stripe</a>
             </div>
-            <div class="method">
-                <a href=""><img src="../../static/shop/images/mpesa.png" alt="" width="80" /></a>
+            <div class="method" id="mpesa">
+                <a href="#"><img src="../../static/shop/images/mpesa.png" alt="" width="80" /></a>
                 <a href="#">MPESA</a>
         </div>
        
@@ -103,7 +103,16 @@
     let total = '{{order.get_cart_total}}'
     if(shipping == 'False'){
         console.log("shipping")
-        document.getElementById('checkout-address').style.display='none';
+        checkoutAddress.style.display='none';
+    }
+
+    if(user != 'AnonymousUser'){
+        checkoutUser.innerHTML = ''
+    }
+
+    if(user != 'AnonymousUser' && shipping == 'False'){
+        checkoutForm.style.display = 'none';
+        paymentOptions.style.display = 'flex';
     }
     
     checkoutForm.addEventListener('submit',(e)=>{
@@ -114,11 +123,52 @@
         paymentOptions.style.display = 'flex';
         // checkoutTable.style.display = 'flex';
         checkoutUser.style.display = 'none';
-        userData(checkoutForm.user_name.value, checkoutForm.user_email.value)
+        
     });
 
-    const userData = (userName, userEmail)=>{
-        console.log(`Username: ${userName} Email: ${userEmail}`)
+    document.getElementById('paypal').addEventListener('click', ()=>{
+   
+        formData("paypal")
+    })
+
+    document.getElementById('stripe').addEventListener('click',()=>{
+        formData('stripe')
+    })
+
+    document.getElementById('mpesa').addEventListener('click', ()=>{
+        formData('mpesa')
+    })
+
+    const formData = (paymentMethod)=>{
+        let payWith = paymentMethod;
+        let userData = {
+            'name': null,
+            'email': null,
+            'total': total,
+        }
+
+        let shippingInformation = {
+            'address': null,
+            'city': null,
+            'zipCode': null,
+            'country': null,
+        }
+        if(shipping != 'False'){
+            shippingInformation.address = checkoutForm.user_address.value
+            shippingInformation.city = checkoutForm.user_city.value
+            shippingInformation.zipCode = checkoutForm.user_zip_code.value
+            shippingInformation.country = checkoutForm.user_country.value
+            
+        }
+
+        if(user == 'AnonymousUser'){
+            userData.name = checkoutForm.user_name.value
+            userData.email = checkoutForm.user_email.value
+        }
+
+        console.log(payWith)
+        console.log(userData)
+        console.log(shippingInformation)
     }
 </script>
 
