@@ -250,7 +250,7 @@ tr:nth-child(even) {
     background-color: rgb(18, 238, 18);
 }
 .checkout .payment-options{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     background-color: blueviolet;
