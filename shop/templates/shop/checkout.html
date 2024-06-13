@@ -45,14 +45,16 @@
         </div>
         <div class="select-payment-body">
             <div class="method">
-                <a href="#">1. PayPal</a>
+                <a href=""><img src="../../static/shop/images/paypal.png" alt="" width="50" /></a>
+                <a href="#"></a>
            </div>
            <div class="method">
-                <a href="#">2. Stripe</a>
+                <a href="" ><img src="../../static/shop/images/stripe.png" alt="" width="80" /></a>
+                <a href="#">Stripe</a>
             </div>
             <div class="method">
-                <a href="#">3. MPESA</a>
-            </div>
+                <a href=""><img src="../../static/shop/images/mpesa.png" alt="" width="80" /></a>
+                <a href="#">MPESA</a>
         </div>
        
     </div>
@@ -90,6 +92,13 @@
 
 <script>
     const checkoutForm = document.getElementById('checkout-form');
+    const paymentOptions = document.getElementById('payment-options');
+    const proceedButtonDiv = document.getElementById('checkout-proceedDiv');
+    const proceedButton= document.getElementById('checkout-proceed');
+    const checkoutTable = document.getElementById('checkout-table');
+    const checkoutAddress = document.getElementById('checkout-address');
+    const checkoutUser = document.getElementById('checkout-user');
+
     let shipping = '{{order.for_shipping}}'
     let total = '{{order.get_cart_total}}'
     if(shipping == 'False'){
@@ -100,7 +109,17 @@
     checkoutForm.addEventListener('submit',(e)=>{
         e.preventDefault()
         console.log("Form submission")
+        proceedButtonDiv.style.display = 'none';
+        checkoutAddress.style.display = 'none';
+        paymentOptions.style.display = 'flex';
+        // checkoutTable.style.display = 'flex';
+        checkoutUser.style.display = 'none';
+        userData(checkoutForm.user_name.value, checkoutForm.user_email.value)
     });
+
+    const userData = (userName, userEmail)=>{
+        console.log(`Username: ${userName} Email: ${userEmail}`)
+    }
 </script>
 
 {% endblock content %}
