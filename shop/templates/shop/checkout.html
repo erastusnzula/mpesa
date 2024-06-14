@@ -186,8 +186,14 @@
         .then((data)=>{
             console.log("Success", data)
             alert("Transaction completed")
+            if (payWith === 'mpesa'){
+                window.location.href = '{% url 'mpesa:stk-push' %}'
+            }else if(payWith==='stripe'){
+                window.location.href = '{% url 'stripe:stripe-pay' %}'
+            }else{
+                window.location.href = '{% url 'paypal:create-payment' %}'
+            }
             
-            window.location.href = '{% url 'dashboard:index' %}'
         })
     }
 </script>
