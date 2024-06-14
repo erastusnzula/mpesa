@@ -3,6 +3,7 @@ import json
 from django.views import View
 from django.http import JsonResponse
 from .models import Product, Order, OrderItem
+import datetime
 
 class ProductList(View):
     def get(self, *args, **kwargs):
@@ -87,3 +88,11 @@ class Checkout(View):
             'order': order
         }
         return render(self.request, 'shop/checkout.html', context)
+    
+    def post(self, request):
+        data = json.loads(request.body)
+        transaction_id = datetime.datetime.now().timestamp()
+        print(data['payWith'])
+        if request.user.is_authenticated:
+            print(f"User {self.request.user.customer}")
+        return JsonResponse("Payment complete.", safe=False)

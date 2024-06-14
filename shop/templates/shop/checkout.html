@@ -169,6 +169,26 @@
         console.log(payWith)
         console.log(userData)
         console.log(shippingInformation)
+
+        let url = '/shop/checkout/'
+
+        fetch(url,{
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({"userData": userData, "shippingInformation": shippingInformation, "payWith": payWith})
+        })
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            console.log("Success", data)
+            alert("Transaction completed")
+            
+            window.location.href = '{% url 'dashboard:index' %}'
+        })
     }
 </script>
 
