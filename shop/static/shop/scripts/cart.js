@@ -9,7 +9,7 @@ for (let i = 0; i<addToCartBtn.length; i++){
         console.log(productID, action)
         
         if(user === 'AnonymousUser'){
-            console.log("Not logged in")
+            updateNotLoggedInUserOrder(productID, action)
         }else{
             
             updateUserOrder(productID, action)
@@ -34,12 +34,36 @@ for (let i = 0; i<removeProductBtn.length; i++){
         console.log(productID, action)
         
         if(user === 'AnonymousUser'){
-            console.log("Not logged in")
+            updateNotLoggedInUserOrder(productID, action)
         }else{
             
             updateUserOrder(productID, action)
         }
     })
+}
+
+const updateNotLoggedInUserOrder = (productID, action)=>{
+    console.log("Unanuthorised User")
+    console.log(productID + " " + action)
+    if(action == 'add'){
+        if(cart[productID] == undefined){
+            cart[productID] = {'quantity': 1}
+
+        }else{
+            cart[productID]['quantity'] += 1
+        }
+    }
+    if(action == 'remove'){
+        cart[productID]['quantity'] -= 1
+
+        if (cart[productID]['quantity'] <=0){
+            console.log("remove item")
+            delete cart[productID]
+        }
+    }
+    console.log(cart)
+    document.cookie= 'cart='+ JSON.stringify(cart) + ';domian=;path=/'
+    location.reload()
 }
 
 const updateUserOrder = (productID, action)=>{
