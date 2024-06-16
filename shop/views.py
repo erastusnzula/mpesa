@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 import json
 from django.views import View
 from django.http import JsonResponse
-from .models import Product, Order, OrderItem, ShippingAddress
+from .models import Product, Order, OrderItem, ShippingAddress, Customer
 import datetime
 from .templatetags.cart import update_cart_items
-from .utils import cookies_cart, cart_data
+from .utils import cookies_cart, cart_data, guest_order
 
 
 
@@ -69,24 +69,24 @@ class Checkout(View):
         print(data['payWith'])
         if request.user.is_authenticated:
             customer = request.user.customer
-            order, created = Order.objects.get_or_create(customer=customer, is_complete=False)
-            total = float(data['userData']['total'])
-            order.transaction_id = transaction_id
-            if total == order.get_cart_total:
-                order.is_complete = True
-            order.save()
-            
-            if order.for_shipping == True:
-                ShippingAddress.objects.create(
-                    customer = customer,
-                    order = order,
-                    address = data['shippingInformation']['address'],
-                    city = data['shippingInformation']['city'],
-                    country = data['shippingInformation']['country'],
-                    zipcode = data['shippingInformation']['zipCode']
-                )
+            order, created = Order.objects.get_or_create(customer=customer, is_complete=False)     
                 
         else:
+            customer, order = guest_order(request, data)
             print("User not logged in.")
-            
+        total = float(data['userData']['total'])
+        order.transaction_id = transaction_id
+        if total == order.get_cart_total:
+            order.is_complete = True
+            update_cart_items.items = 0
+        order.save() 
+        if order.for_shipping == True:
+            ShippingAddress.objects.create(
+                customer = customer,
+                order = order,
+                address = data['shippingInformation']['address'],
+                city = data['shippingInformation']['city'],
+                country = data['shippingInformation']['country'],
+                zipcode = data['shippingInformation']['zipCode']
+            )  
         return JsonResponse("Payment complete.", safe=False)

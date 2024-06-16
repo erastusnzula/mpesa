@@ -103,7 +103,7 @@
     let total = '{{order.get_cart_total}}'
     if(shipping == 'False'){
         console.log("shipping")
-        checkoutAddress.style.display='none';
+        checkoutAddress.innerHTML = '';
     }
 
     if(user != 'AnonymousUser'){
@@ -114,6 +114,9 @@
         checkoutForm.style.display = 'none';
         paymentOptions.style.display = 'flex';
     }
+
+    csrftoken = checkoutForm.getElementsByTagName("input")[0].value
+    console.log(csrftoken)
     
     checkoutForm.addEventListener('submit',(e)=>{
         e.preventDefault()
@@ -186,6 +189,8 @@
         .then((data)=>{
             console.log("Success", data)
             alert("Transaction completed")
+            cart={}
+            document.cookie= 'cart='+ JSON.stringify(cart) + ';domian=;path=/'
             if (payWith === 'mpesa'){
                 window.location.href = '{% url 'mpesa:stk-push' %}'
             }else if(payWith==='stripe'){

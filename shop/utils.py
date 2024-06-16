@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import json
 from django.views import View
 from django.http import JsonResponse
-from .models import Product, Order, OrderItem, ShippingAddress
+from .models import Product, Order, OrderItem, ShippingAddress, Customer
 import datetime
 from .templatetags.cart import update_cart_items
 
@@ -55,3 +55,22 @@ def cart_data(request):
         items = cookieData['items']
         order = cookieData['order']
     return {'items': items, 'order': order}
+
+
+def guest_order(request, data):
+    name = data['userData']['name']
+    email = data['userData']['email']
+    cookie_data = cookies_cart(request)
+    items = cookie_data['items']
+    customer, created = Customer.objects.get_or_create(email = email)
+    customer.first_name = name
+    customer.save()
+    order = Order.objects.create(customer=customer, is_complete=False)
+    for item in items:
+        product = Product.objects.get(id=item['product']['id'])
+        order_item = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity = item['quantity']
+        )
+    return customer, order
