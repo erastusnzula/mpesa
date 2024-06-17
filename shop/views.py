@@ -77,9 +77,10 @@ class Checkout(View):
         total = float(data['userData']['total'])
         order.transaction_id = transaction_id
         if total == order.get_cart_total:
-            order.is_complete = True
-            update_cart_items.items = 0
-        order.save() 
+            # order.is_complete = True
+            # update_cart_items.items = 0
+            order.save() 
+        
         if order.for_shipping == True:
             ShippingAddress.objects.create(
                 customer = customer,

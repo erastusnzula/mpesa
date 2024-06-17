@@ -24,6 +24,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     config('NGROK_URL')
 ]
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 # Application definition
 
